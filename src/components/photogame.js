@@ -1,11 +1,58 @@
 import "../styles/photogame.css";
 import Dog from "../dog.jpeg";
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, setDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
 const PhotoGame = () => {
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyCKT4SIykdMH_5cQuprMoUfDTdHb8QfaT4",
+    authDomain: "photo-app-2e10a.firebaseapp.com",
+    projectId: "photo-app-2e10a",
+    storageBucket: "photo-app-2e10a.appspot.com",
+    messagingSenderId: "770763465304",
+    appId: "1:770763465304:web:2e3b06fe8791982fe5602d",
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const choicesRef = collection(db, "Choices");
+  async function getChoices() {
+    await setDoc(doc(choicesRef, "dog"), {
+      name: "dog",
+    });
+
+    await setDoc(doc(choicesRef, "cat"), {
+      name: "cat",
+    });
+
+    await setDoc(doc(choicesRef, "lion"), {
+      name: "lion",
+    });
+
+    const docRef = doc(db, "Choices", "dog");
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+      alert("Wrong");
+    }
+  }
+  /*
   const handleDog = () => {
     const dog = document.querySelector('input[id="dog"]');
     return dog.checked ? alert("noice") : alert("not noice");
   };
+  */
   return (
     <div className="container">
       <div className="PictureContainer">
@@ -15,7 +62,7 @@ const PhotoGame = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleDog();
+            getChoices();
           }}
         >
           <p className="question">What animal is in this picture?</p>
@@ -35,4 +82,5 @@ const PhotoGame = () => {
     </div>
   );
 };
+
 export default PhotoGame;

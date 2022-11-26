@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "photo-app-2e10a",
+    "photo-app": "photo-app-2e10a"
+  },
+  "targets": {},
+  "etags": {}
+}
