@@ -24,35 +24,24 @@ const PhotoGame = () => {
 
   const choicesRef = collection(db, "Choices");
   async function getChoices() {
+    const dogButton = document.querySelector("input[value=dog]");
+
     await setDoc(doc(choicesRef, "dog"), {
       name: "dog",
-    });
-
-    await setDoc(doc(choicesRef, "cat"), {
-      name: "cat",
-    });
-
-    await setDoc(doc(choicesRef, "lion"), {
-      name: "lion",
     });
 
     const docRef = doc(db, "Choices", "dog");
     const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
+    if (docSnap.exists() && dogButton.checked) {
       console.log("Document data:", docSnap.data());
+      alert("Correct!");
     } else {
       // doc.data() will be undefined in this case
       console.log("No such document!");
-      alert("Wrong");
+      alert("Wrong!");
     }
   }
-  /*
-  const handleDog = () => {
-    const dog = document.querySelector('input[id="dog"]');
-    return dog.checked ? alert("noice") : alert("not noice");
-  };
-  */
   return (
     <div className="container">
       <div className="PictureContainer">

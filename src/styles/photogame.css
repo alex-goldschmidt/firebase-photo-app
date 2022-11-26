@@ -13,4 +13,5 @@ input[type="submit"] {
   width: 100px;
   margin-left: 60px;
   margin-top: 13px;
+  display: block;
 }
